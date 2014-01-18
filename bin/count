@@ -1,0 +1,29 @@
+
+#
+# Version 0.0.1
+# Author  Yorkie Neil <yorkiefixer@gmail.com>
+#
+
+Log() {
+  printf "  \033[36m%10s\033[0m : \033[90m%s\033[0m\n" $1 $2
+}
+
+if [ ${#1} = 0 ]; then
+  echo usage: count path
+  exit 0
+fi
+
+total=0
+cd $1
+
+for dir in `find * -type f`; do
+  len=`wc -l < $dir`
+  if [ $? -ne 0 ] ; then
+    echo "\n \033[32mError: $dir\033[0m\n\n"
+  else
+    Log searching $dir
+    total=$(( $total+$len ))
+  fi
+done
+
+Log Total $total
